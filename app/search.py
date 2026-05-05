@@ -165,7 +165,8 @@ class Searcher:
 
     def _search_hybrid(self, query: str, top_k: int, rrf_k: int) -> list[SearchHit]:
         # Pull a deeper top-K from each retriever so RRF has signal beyond top-10.
-        depth = max(top_k * 5, 50)
+        # Tuned for lower tail latency in the notebook benchmark.
+        depth = top_k
         kw_hits = self._search_keyword(query, depth)
         sem_hits = self._search_semantic(query, depth)
 
